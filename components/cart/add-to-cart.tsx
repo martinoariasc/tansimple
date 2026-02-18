@@ -11,12 +11,15 @@ import { useCart } from "./cart-context";
 function SubmitButton({
   availableForSale,
   selectedVariantId,
+  className,
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
+  className?: string;
 }) {
-  const buttonClasses =
+  const defaultClasses =
     "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white";
+  const buttonClasses = className || defaultClasses;
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!availableForSale) {
@@ -57,7 +60,7 @@ function SubmitButton({
   );
 }
 
-export function AddToCart({ product }: { product: Product }) {
+export function AddToCart({ product, className }: { product: Product; className?: string }) {
   const { variants, availableForSale } = product;
   const { addCartItem } = useCart();
   const searchParams = useSearchParams();
@@ -85,6 +88,7 @@ export function AddToCart({ product }: { product: Product }) {
       <SubmitButton
         availableForSale={availableForSale}
         selectedVariantId={selectedVariantId}
+        className={className}
       />
       <p aria-live="polite" className="sr-only" role="status">
         {message}

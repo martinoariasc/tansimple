@@ -1,33 +1,60 @@
-import Link from 'next/link';
+'use client';
 
-export default function Hero() {
+import { AddToCart } from "components/cart/add-to-cart";
+import { motion } from "framer-motion";
+import { Product } from "lib/shopify/types";
+
+export default function Hero({ product }: { product: Product | undefined }) {
+    const price = product?.priceRange?.maxVariantPrice?.amount;
+    const currencyCode = product?.priceRange?.maxVariantPrice?.currencyCode || "USD";
+
     return (
-        <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden bg-[#fdfbf7]">
-            <div className="absolute inset-0 z-0">
-                <img
-                    src="https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=2070&auto=format&fit=crop"
-                    alt="Luxury Skincare"
-                    className="w-full h-full object-cover opacity-60"
-                />
-                <div className="absolute inset-0 hero-gradient"></div>
-            </div>
-
-            <div className="relative z-10 text-center px-4 max-w-4xl">
-                <span className="text-xs uppercase tracking-[0.3em] mb-4 block animate-fade-in premium-text">
-                    Tecnología de Estética Profesional en Casa
-                </span>
-                <h1 className="text-5xl md:text-7xl mb-6 premium-text">
-                    La libertad de una piel suave, ahora es <span className="font-light italic">tan simple.</span>
-                </h1>
-                <p className="text-lg md:text-xl mb-10 text-neutral-600 font-light max-w-2xl mx-auto">
-                    ¿Cansada de las rutinas de depilación dolorosas? Creemos que la tecnología de punta no debería ser complicada.
-                </p>
-                <Link
-                    href="/search"
-                    className="inline-block px-12 py-4 bg-black text-white text-xs uppercase tracking-widest hover:bg-neutral-800 transition-all"
+        <section className="min-h-screen flex items-center pt-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
                 >
-                    Quiero mi piel suave hoy
-                </Link>
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-[#8A8E75] mb-6 block font-semibold">
+                        Inversión en ti
+                    </span>
+                    <h1 className="text-6xl md:text-8xl leading-[1.1] mb-8 text-[#2C2D23]">
+                        La belleza de lo esencial. <br />
+                        <span className="italic font-light italic">tan simple.</span>
+                    </h1>
+                    <p className="text-lg text-[#2C2D23]/70 font-light max-w-md leading-relaxed mb-10">
+                        Libertad es dejar de contar los días para tu próxima cita. Es recuperar tu tiempo. Es sentir tu piel suave, siempre.
+                        Diseño atemporal con eficacia probada en casa.
+                        {price && <span className="block mt-4 text-xl font-medium">{new Intl.NumberFormat('es-ES', { style: 'currency', currency: currencyCode }).format(parseFloat(price))}</span>}
+                    </p>
+                    <div className="flex gap-8 items-center w-full sm:w-auto">
+                        {product ? (
+                            <AddToCart
+                                product={product}
+                                className="bg-[#2C2D23] text-[#F1EAD8] px-10 py-5 text-[11px] uppercase tracking-widest animate-pulse-premium hover:bg-[#8A8E75] transition-colors w-full sm:w-auto flex justify-center items-center"
+                            />
+                        ) : (
+                            <button className="bg-[#2C2D23] text-[#F1EAD8] px-10 py-5 text-[11px] uppercase tracking-widest animate-pulse-premium">
+                                Descubre la Experiencia
+                            </button>
+                        )}
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.2, delay: 0.2 }}
+                    className="relative aspect-square w-full rounded-[60px] overflow-hidden shadow-2xl"
+                >
+                    <img
+                        src={product?.featuredImage?.url || "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2070&auto=format&fit=crop"}
+                        alt={product?.featuredImage?.altText || "IPL Device"}
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C2D23]/20 to-transparent" />
+                </motion.div>
             </div>
         </section>
     );
