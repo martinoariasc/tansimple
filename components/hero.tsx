@@ -1,6 +1,6 @@
 'use client';
 
-import { AddToCart } from "components/cart/add-to-cart";
+import { BuyNowButton } from "components/checkout/buy-now-button";
 import { motion } from "framer-motion";
 import { Product } from "lib/shopify/types";
 
@@ -30,9 +30,10 @@ export default function Hero({ product }: { product: Product | undefined }) {
                     </p>
                     <div className="flex gap-8 items-center w-full sm:w-auto">
                         {product ? (
-                            <AddToCart
+                            <BuyNowButton
                                 product={product}
-                                className="bg-[#2C2D23] text-[#F1EAD8] px-10 py-5 text-[11px] uppercase tracking-widest animate-pulse-premium hover:bg-[#8A8E75] transition-colors w-full sm:w-auto flex justify-center items-center"
+                                text="Descubre la Experiencia"
+                                className="bg-[#2C2D23] text-[#F1EAD8] px-10 py-5 text-[11px] uppercase tracking-widest animate-pulse-premium hover:bg-[#8A8E75] transition-colors w-full sm:w-auto"
                             />
                         ) : (
                             <button className="bg-[#2C2D23] text-[#F1EAD8] px-10 py-5 text-[11px] uppercase tracking-widest animate-pulse-premium">

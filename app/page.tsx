@@ -5,7 +5,14 @@ import { getProducts } from "lib/shopify";
 
 export default async function ScrollytellingPage() {
   // Obtenemos los productos ordenados por los más vendidos
-  const products = await getProducts({ sortKey: "BEST_SELLING", reverse: true });
+  let products: Product[] = [];
+  try {
+    products = await getProducts({ sortKey: "BEST_SELLING", reverse: true });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    // Fallback silencioso para no romper el build si faltan credenciales
+  }
+
   const mainProduct = products.length > 0 ? products[0] : undefined;
 
   return (

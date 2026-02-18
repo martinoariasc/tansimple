@@ -1,6 +1,6 @@
 'use client';
 
-import { AddToCart } from "components/cart/add-to-cart";
+import { BuyNowButton } from "components/checkout/buy-now-button";
 import { motion } from "framer-motion";
 import { Product } from "lib/shopify/types";
 import { ShieldCheck } from "lucide-react";
@@ -23,9 +23,10 @@ export const FinalCta = ({ product }: { product: Product | undefined }) => (
             </p>
             <div className="pt-8 flex justify-center w-full">
                 {product ? (
-                    <AddToCart
+                    <BuyNowButton
                         product={product}
-                        className="bg-[#8A8E75] text-[#F1EAD8] px-16 py-6 text-xs uppercase tracking-[0.3em] font-bold animate-pulse-premium hover:shadow-2xl transition-all w-full sm:w-auto flex justify-center items-center"
+                        text="Reservar Mi Depiladora"
+                        className="bg-[#8A8E75] text-[#F1EAD8] px-16 py-6 text-xs uppercase tracking-[0.3em] font-bold animate-pulse-premium hover:shadow-2xl transition-all w-full sm:w-auto"
                     />
                 ) : (
                     <button className="bg-[#8A8E75] text-[#F1EAD8] px-16 py-6 text-xs uppercase tracking-[0.3em] font-bold animate-pulse-premium hover:shadow-2xl transition-all">
