@@ -2,6 +2,7 @@ import Hero from "components/hero";
 import { FinalCta } from "components/homepage/final-cta";
 import { ComparisonTable, Navbar, RitualSection, TechSection } from "components/homepage/sections";
 import { getProducts } from "lib/shopify";
+import { Product } from "lib/shopify/types";
 
 export default async function ScrollytellingPage() {
   // Obtenemos los productos ordenados por los más vendidos
