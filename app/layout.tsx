@@ -7,12 +7,12 @@ import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const { SITE_NAME } = process.env;
+const SITE_NAME = process.env.SITE_NAME || "tan simple";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: SITE_NAME!,
+    default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
   robots: {
@@ -27,7 +27,13 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   // Don't await the fetch, pass the Promise to the context provider
-  const cart = getCart();
+  let cart;
+  try {
+    cart = getCart();
+  } catch (e) {
+    console.error("Error fetching cart:", e);
+    cart = Promise.resolve(undefined);
+  }
 
   return (
     <html lang="en" className={GeistSans.variable}>
